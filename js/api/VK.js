@@ -13,14 +13,27 @@ class VK {
    * Получает изображения
    * */
   static get(id = '', callback){
-
+    console.log('step 1')
+    this.callback = callback;
+    let script = document.createElement('script');
+    script.src = `https://vk.com/dev/photos.get?owner_id=${id}&album_id=profile&access_token=${this.ACCESS_TOKEN}&v=5.131&callback=VK.processData`
+    document.getElementsByTagName('body')[0].appendChild(script);
   }
+  
 
   /**
    * Передаётся в запрос VK API для обработки ответа.
    * Является обработчиком ответа от сервера.
    */
   static processData(result){
+    document.querySelector('body').lastElementChild.remove();
+    if (result.ok) {
+      console.log(result);
+      } else {
+      alert('Ошибка :' + result.status);
+      return;
+      };
+
 
   }
 }
